@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, Button, View } from "react-native";
+import { StyleSheet, Text, TextInput, Button, View, Alert } from "react-native";
 
 export default function AddEvent() {
 
@@ -16,7 +16,7 @@ export default function AddEvent() {
             placeholder="Nowe Wydarzenie"
             onChangeText={changeHandler}
             />
-            <Button onPress={() => console.log(text)} title='AddEvent' color='#1d67de' />
+            <Button onPress={() => console.log} title='AddEvent' color='#1d67de' />
         </View>
     )
 }

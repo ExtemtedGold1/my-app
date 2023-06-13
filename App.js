@@ -26,9 +26,9 @@ export default function App() {
       return prevEvents.filter(event => event.key != key);
     })
   }
-
+  
   const submitHandler = (text) => {
-
+    Alert.alert('3')
     if(text.length > 3){
     setEvents((prevEvents) => {
       return [
@@ -39,7 +39,7 @@ export default function App() {
     }
     else{
       Alert.alert('Wrong', 'Wydarzenie musi miec co najmniej 3 litery', [
-        {text: 'Jasne', onPress: () => console.log('alert closed')}
+        {text: 'Jasne', onPress: () => console.log('alert')}
       ])
     }
   }
@@ -74,14 +74,28 @@ return(
           onChangeText={(val) => setPassword(val)}></TextInput>
 
           <View style={styles.buttonContainer}>
+
           <AddEvent submitHandler={submitHandler}/>
+
           <Button title="Wydarzenia"> </Button>
+
           </View>
 
           <View style={styles.list}>
           <FlatList data={event} renderItem={({item}) => {
-            <ItemEvent item={item} pressHandler={pressHandler}/>
+            // <Text style={styles.item}>{item.text}</Text>
+          return <ItemEvent item={item} pressHandler={pressHandler}/>
           }}/>
+          </View>
+
+          <View>
+            { event.map((item) =>{
+              return (
+                <View>
+                  <Text>{item.text}</Text>
+                </View>
+              )
+            })}
           </View>
     </View>
   </View>
@@ -111,7 +125,10 @@ const styles = StyleSheet.create({
     width: 200,
   },
   item:{
-     
+    textAlign: 'center',
+    color: '#fff',
+    fontSize:20,
+    fontWeight:'bold',
   }
 });
 

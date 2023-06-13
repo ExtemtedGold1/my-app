@@ -1,22 +1,49 @@
 
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, Alert, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, FlatList } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { useState } from "react";
 import Navigator from './routes/homeStack';
+import Header from './components/header';
+import ItemEvent from "./components/itemEvent";
+import AddEvent from "./components/addEvent";
 
 
 export default function App() {
 
-  const [wydarzenie, setWydarzenie] = useState([
-    { name: 'impreza', key: '1'},
-    { name: 'obiad', key: '2'},
-    { name: 'urodziny', key: '3'},
-    { name: 'imieniny', key: '4'},
-    { name: 'przypomnienie', key: '5'},
+  const [event, setEvents] = useState([
+    { text: 'impreza', key: '1'},
+    { text: 'obiad', key: '2'},
+    { text: 'urodziny', key: '3'},
+    { text: 'imieniny', key: '4'},
+    { text: 'przypomnienie', key: '5'},
   ]);
+
+  const pressHandler = (key) => {
+    setEvents((prevEvents) => {
+      return prevEvents.filter(event => event.key != key);
+    })
+  }
+
+  const submitHandler = (text) => {
+
+    if(text.length > 3){
+    setEvents((prevEvents) => {
+      return [
+        {text:text, key: Math.random().toString() },
+        ...prevEvents
+      ];
+    });
+    }
+    else{
+      Alert.alert('Wrong', 'Wydarzenie musi miec co najmniej 3 litery', [
+        {text: 'Jasne', onPress: () => console.log('alert closed')}
+      ])
+    }
+  }
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [time, setTime] = useState('');
@@ -32,26 +59,30 @@ export default function App() {
 
 return(
   <View style={styles.container}> 
-  <View style={styles.header}>
-      <View style={styles.buttonContainer}></View>
-          <Text style={styles.boldText}>Home Page {name}</Text>
+    <Header/>
+      <View style={styles.content}>
           <Text>Login</Text>
+        
           <TextInput style={styles.input} 
           placeholder='username'
           onChangeText={(val) => setName(val)}></TextInput>
+
           <Text>Password</Text>
+
           <TextInput style={styles.input} 
           placeholder='password'
           onChangeText={(val) => setPassword(val)}></TextInput>
-          <Button title="Wydarzenia"> </Button>
 
-          { wydarzenie.map((item) => {
-            return (
-              <View key={item.key}>
-                <Text style={styles.item}>{item.name}</Text>
-              </View> 
-            )
-          })}
+          <View style={styles.buttonContainer}>
+          <AddEvent submitHandler={submitHandler}/>
+          <Button title="Wydarzenia"> </Button>
+          </View>
+
+          <View style={styles.list}>
+          <FlatList data={event} renderItem={({item}) => {
+            <ItemEvent item={item} pressHandler={pressHandler}/>
+          }}/>
+          </View>
     </View>
   </View>
 );
@@ -60,19 +91,17 @@ return(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 30,
+    backgroundColor: '#fff',
   },
-  header: {
+  content: {
+    padding: 40,
+  },
+  list:{
+    marginTop: 20,
+    backgroundColor: 'pink',
   },
   buttonContainer: {
-    backgroundColor: '#222',
     justifyContent: 'center',
-  },
-  boldText: {
-    color: 'black',
   },
   input: {
     borderWidth: 2,
@@ -81,14 +110,19 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 200,
   },
-  item: {
-    marginTop: 5,
-    padding: 5,
-    backgroundColor: 'pink',
-    fontSize: 16,
+  item:{
+     
   }
 });
 
+/*
+{ wydarzenie.map((item) => {
+  return (
+    <View key={item.key}>
+      <Text style={styles.item}>{item.name}</Text>
+    </View> 
+  )
+})}*/
 
 /*import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';

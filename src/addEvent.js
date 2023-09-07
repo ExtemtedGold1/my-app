@@ -1,17 +1,29 @@
-/*import React from 'react';
-import { View, Button, Alert } from 'react-native';
+// import React from 'react';
+// import { View, Button, Alert, TextInput } from 'react-native';
 
-const addEventButton = () => {
-  const addEvent = () => {
-    // Tutaj możesz umieścić kod dodawania wydarzenia
-    Alert.alert('Dodano wydarzenie', 'Wydarzenie zostało dodane.');
-  };
+// const addEventButton = ({ onAddEvent }) => {
+//   const [eventText, setEventText] = useState('') 
 
-  return (
-    <View>
-      <Button title="Dodaj wydarzenie" onPress={addEvent} />
-    </View>
-  );
-};
+//   const addEvent = () => {
+//     if(eventText) {
+//       onAddEvent(eventText);//
+//       setEventText('');
+//       Alert.alert('Dodano wydarzenie', 'Wydarzenie zostało dodane.');
+//     } else {
+//       Alert.alert('Błąd', 'Proszę wprowadzić treść wydarzenia.');
+//     }
+//   };
 
-export default addEventButton;*/
+//   return(
+//     <View>
+//       <TextInput
+//         placeholder="Wprowadź treść wydarzenia"
+//         value={eventText}
+//         onChangeText={(text) => setEventText(text)} // Aktualizacja stanu po wprowadzeniu tekstu
+//       />
+//       <Button title="Dodaj wydarzenie" onPress={addEvent} />
+//     </View>
+//   );
+// };
+
+// export default addEventButton;

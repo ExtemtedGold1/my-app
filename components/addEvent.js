@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, Button, View, Alert } from "react-native";
+import { StyleSheet, TextInput, Button, View, Alert } from "react-native";
 
-export default function AddEvent() {
-
+export default function AddEvent({submitHandler}) {
     const [text, setText] = useState('');
 
     const changeHandler = (val) => {
         setText(val)
+    }
+
+    const handleAddEvent = () => {
+        if (text) {
+            submitHandler(text);
+            setText('');
+        } else {
+          Alert.alert('Błąd', 'Pole nie może być puste', [
+            {text: 'Ok', onPress: () => console.log('alert')}
+          ]);
+        }
     }
 
     return (
@@ -15,8 +25,9 @@ export default function AddEvent() {
             style={styles.input}
             placeholder="Nowe Wydarzenie"
             onChangeText={changeHandler}
+            value={text}
             />
-            <Button onPress={() => console.log} title='AddEvent' color='#1d67de' />
+            <Button onPress={handleAddEvent} title='AddEvent' color='#1d67de' />
         </View>
     )
 }
